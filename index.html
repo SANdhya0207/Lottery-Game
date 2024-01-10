@@ -32,6 +32,8 @@
         function func() 
         {
             event.preventDefault();
+            if(typeof val !== 'number') alert('Please Enter the number');
+            
             const val = parseInt(document.getElementById("box").value, 10);
 
             if(val <= 0) alert("Number should be greater than 0");
