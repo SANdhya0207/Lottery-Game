@@ -32,7 +32,7 @@
         function func() 
         {
             event.preventDefault();
-            if(typeof (document.getElementById("box").value) !== 'number') 
+            if(typeof (document.getElementById("box").value) !== 'string') 
                 alert('Please Enter the number');
             
             const val = parseInt(document.getElementById("box").value, 10);
