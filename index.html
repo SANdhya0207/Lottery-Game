@@ -25,42 +25,26 @@
 
     <script>
         let attempts = 10;
-        const arr = [];
+        let lower = 1, upper = 100;
         let click = false;
                 
 
         function func() 
         {
             event.preventDefault();
-            if(typeof (document.getElementById("box").value) !== 'string') 
-                alert('Please Enter the number');
-            
-            const val = parseInt(document.getElementById("box").value, 10);
+            let val = document.getElementById("box").value;
 
-            if(val <= 0) alert("Number should be greater than 0");
+            if(val === '')
+            {
+                alert("Please enter a number");
+            }
+            else if(parseInt(val,10) <= 0) alert("Number should be greater than 0");
 
-            else if(val >= 100) alert("Number should be lesser than 100");
+            else if(parseInt(val,10) >= 100) alert("Number should be lesser than 100");
         
             else
             {
-                if(click == false)
-                {
-                    let i=0;
-                        while(i < 9)
-                        {
-                            const ele = Math.ceil(Math.random() * 100);
-                            if(ele != val)
-                            {
-                                arr.push(ele);
-                                i++;
-                            }
-                        }
-                        console.log(val);
-                        arr.push(val);
-                        console.log(arr);
-                        click = true;
-                    
-                }
+                val = parseInt(val,10);
                 attempts--;
                 if(attempts < 0)
                 {
@@ -69,18 +53,27 @@
                 else{
                     document.getElementById("btn").innerHTML = "Test Your Luck";
                     document.getElementById("text").innerHTML = `Remaining Attempts ${attempts}`;
-                    const len = arr.length
-                    const index = Math.floor(Math.random() * len)
-                    let str;
-                    if(arr[index] == val)
+                    let str = "Bad Luck!!";
+                    if(click === false)
                     {
-                        str = "You Win!!"
+                        const range = upper - lower + 1;
+                        const guess = lower + Math.floor(Math.random() * range);
+                    
+                        if(guess == val)
+                        {
+                            str = "You Win!!"
+                            click = true;
+                        }
+                        else if(guess < val)
+                        {
+                            lower = guess+1;
+                        }
+                        else{
+                            upper = guess-1;
+                        }
+                        console.log(guess);
                     }
-                    else{
-                        str = "Bad Luck!!"
-                    }
-                    console.log(arr[index]);
-                    arr.splice(index, 1)
+                    
                     document.getElementById("gm").innerHTML = str;
                 }
         
@@ -91,8 +84,9 @@
                     attempts = 10;
                     document.getElementById("text").innerHTML = `Remaining Attempts ${attempts}`;
                     document.getElementById("box").value = "";
-                    arr.length = 0;  // Clear the array
                     click = false
+                    lower = 1
+                    upper = 100
                 }
             }
         }
