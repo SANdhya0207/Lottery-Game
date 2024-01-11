@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lottery Game</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <h1>Lottery Game</h1>
+    <div id="game">
+        <div class="image">
+            <img src="./image.jpeg" alt="failed to load image">
+        </div>
+        <div class="cls">
+            <h4 id="gm">Let's Start the Game !!</h4>
+            <h4 id="text">Remaining Attempts - 10</h4>
+            <div id="input">
+                <label for="number" id="num">Enter your Lucky Number : <br></label>
+                <input type="number" id="box"> 
+            </div>
+            <button id="btn" onclick=func()>Test Your Luck</button>
+            </div>
+        </div>
+
+    <script>
+        let attempts = 10;
+        const arr = [];
+        let click = false;
+                
+
+        function func() 
+        {
+            event.preventDefault();
+            let val = document.getElementById("box").value;
+
+            if(val === '')
+            {
+                alert("Please enter a number");
+            }
+            else if(parseInt(val,10) <= 0) alert("Number should be greater than 0");
+
+            else if(parseInt(val,10) >= 100) alert("Number should be lesser than 100");
+        
+            else
+            {
+                val = parseInt(val,10);
+                if(click == false)
+                {
+                    let i=0;
+                        while(i < 9)
+                        {
+                            const ele = Math.ceil(Math.random() * 100);
+                            if(ele != val)
+                            {
+                                arr.push(ele);
+                                i++;
+                            }
+                        }
+                        console.log(val);
+                        arr.push(val);
+                        console.log(arr);
+                        click = true;
+                    
+                }
+                attempts--;
+                if(attempts < 0)
+                {
+                    resetGame();
+                }
+                else{
+                    document.getElementById("btn").innerHTML = "Test Your Luck";
+                    document.getElementById("text").innerHTML = `Remaining Attempts ${attempts}`;
+                    const len = arr.length
+                    const index = Math.floor(Math.random() * len)
+                    let str;
+                    if(arr[index] == val)
+                    {
+                        str = "You Win!!"
+                    }
+                    else{
+                        str = "Bad Luck!!"
+                    }
+                    console.log(arr[index]);
+                    arr.splice(index, 1)
+                    document.getElementById("gm").innerHTML = str;
+                }
+        
+
+                function resetGame() {
+                    document.getElementById("btn").innerHTML = "Restart Game";
+                    document.getElementById("gm").innerHTML = "Start!!"
+                    attempts = 10;
+                    document.getElementById("text").innerHTML = `Remaining Attempts ${attempts}`;
+                    document.getElementById("box").value = "";
+                    arr.length = 0;  // Clear the array
+                    click = false
+                }
+            }
+        }
+    </script>
+</body>
+</html>
